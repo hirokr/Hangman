@@ -17,7 +17,7 @@ WINS = [940, 650]
 #initializing the pygame
 py.init()
 screen = py.display.set_mode(WINS)
-py.display.set_caption("Hangman 10.2")
+py.display.set_caption("Hangman 10.2.1")
 Clock = py.time.Clock()
 screen.fill((111,169,196))
 
