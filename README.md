@@ -1,4 +1,3 @@
 # Hangman
 This project is for CSE111 project made by python.  
-pygame, nltk, re, random, sys libraries was used to made this project.  
-Encapsulation and inheritance was used as per the project guideline.  
+pygame, nltk, re, random, sys libraries were used to made this project.  
