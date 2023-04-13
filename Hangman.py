@@ -1,4 +1,4 @@
-# This the final version of hangman 
+#hangman 10.2
 
 import pygame as py
 import nltk    #library for english dictionary
@@ -17,7 +17,7 @@ WINS = [940, 650]
 #initializing the pygame
 py.init()
 screen = py.display.set_mode(WINS)
-py.display.set_caption("Hangman 10.1")
+py.display.set_caption("Hangman 10.2")
 Clock = py.time.Clock()
 screen.fill((111,169,196))
 
@@ -78,14 +78,14 @@ class Meaning:
 class Screen(Meaning):
     game_screen = {"open":True, "first":False, "win": False, "lost": False, "developer": False}
     def __init__(self, word) -> None:
-        self.guess_word = word
+        self.__guess_word = word
         self.Game_Activity = False
-        self.right_choice = [None] * len(self.guess_word)
+        self.right_choice = [None] * len(self.__guess_word)
         self.mistake = 0
         self.showMistake = 0
-        self.render_word = win_font.render(self.guess_word.upper(), False, 'blue')
+        self.render_word = win_font.render(self.__guess_word.upper(), False, 'blue')
         
-        super().__init__(self.guess_word)
+        super().__init__(self.__guess_word)
 
         self.first_page = py.image.load("resources/pages/open_page.png").convert()
         self.lost = py.image.load("resources/pages/lost_page.png").convert()
@@ -137,7 +137,7 @@ class Screen(Meaning):
         if self.mistake >3:
             self.meaningPage()
 
-        if check_word == self.guess_word:
+        if check_word == self.__guess_word:
             self.win_lost_dev("win")
 
         if self.mistake == 6:
@@ -155,6 +155,10 @@ class Screen(Meaning):
                     py.quit()
                     exit()
             if event.type == py.KEYDOWN:
+                if event.key == py.K_ESCAPE:
+                    py.quit()
+                    exit()
+            if event.type == py.KEYDOWN:
                 if event.key == py.K_SPACE:
                     self.playAgain()
                 
@@ -163,6 +167,10 @@ class Screen(Meaning):
         screen.blit(self.render_word, (520, 348))
         for event in py.event.get():
             if event.type == py.QUIT:
+                    py.quit()
+                    exit()
+            if event.type == py.KEYDOWN:
+                if event.key == py.K_ESCAPE:
                     py.quit()
                     exit()
             if event.type == py.KEYDOWN:
@@ -201,18 +209,19 @@ class Screen(Meaning):
 class Hangman(Screen):
     def __init__(self) -> None:
         self.choseWords()
-        super().__init__(self.guess_word)
+        super().__init__(self.__guess_word)
         self.mistake_list = []
        
     def choseWords(self):
         word = choice(words).lower()
-        if len(wordnet.synsets(word)) == 0: 
+        
+        if len(wordnet.synsets(word)) == 0 or re.search(r'[?|`~:;,123456789()]', word): 
             self.choseWords()
         else:
-            self.guess_word = word
+            self.__guess_word = word
 
     def index(self, ltr):
-        for i,j in enumerate(self.guess_word):
+        for i,j in enumerate(self.__guess_word):
             if j == ltr:
                 self.right_choice[i] = j
 
@@ -231,7 +240,7 @@ class Hangman(Screen):
             
     def play(self):
 
-        # print(self.guess_word) #Printing the Guess Word for developer
+        # print(self.__guess_word) #Printing the Guess Word for developer
        
         while True :
 
@@ -262,11 +271,11 @@ class Hangman(Screen):
                     if event.key == py.K_ESCAPE:
                         py.quit()
                         exit()
-                    if py.key.name(event.key) in self.guess_word:
+                    if py.key.name(event.key) in self.__guess_word:
                         self.index(py.key.name(event.key))
                         self.hide(py.key.name(event.key))
 
-                    if py.key.name(event.key) not in self.guess_word:
+                    if py.key.name(event.key) not in self.__guess_word:
                         self.two_mistake()
                         self.hide(py.key.name(event.key))
 
