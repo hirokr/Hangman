@@ -208,30 +208,30 @@ class Screen(Meaning):
 
 class Hangman(Screen):
     def __init__(self) -> None:
-        self.choseWords()
+        self.__choseWords__()
         super().__init__(self.__guess_word)
         self.mistake_list = []
        
-    def choseWords(self):
+    def __choseWords__(self):
         word = choice(words).lower()
         
         if len(wordnet.synsets(word)) == 0 or re.search(r'[?|`~:;,123456789()]', word): 
-            self.choseWords()
+            self.__choseWords__()
         else:
             self.__guess_word = word
 
-    def index(self, ltr):
+    def __index__(self, ltr):
         for i,j in enumerate(self.__guess_word):
             if j == ltr:
                 self.right_choice[i] = j
 
-    def hide(self,word):
+    def __hide__(self,word):
         for letter in letters:
             x,y,ltr,visible = letter
             if word == ltr.lower():
                 letter[3] = False   
 
-    def two_mistake(self):
+    def __two_mistake__(self):
         self.mistake_list.append(1)
         self.showMistake +=1
         if len(self.mistake_list) == 2:
@@ -272,12 +272,12 @@ class Hangman(Screen):
                         py.quit()
                         exit()
                     if py.key.name(event.key) in self.__guess_word:
-                        self.index(py.key.name(event.key))
-                        self.hide(py.key.name(event.key))
+                        self.__index__(py.key.name(event.key))
+                        self.__hide__(py.key.name(event.key))
 
                     if py.key.name(event.key) not in self.__guess_word:
-                        self.two_mistake()
-                        self.hide(py.key.name(event.key))
+                        self.__two_mistake__()
+                        self.__hide__(py.key.name(event.key))
 
                     if py.key.name(event.key) in "1":
                         self.win_lost_dev("developer")
