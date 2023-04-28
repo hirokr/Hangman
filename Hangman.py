@@ -1,4 +1,4 @@
-#hangman 10.2
+#hangman
 
 import pygame as py
 import nltk    #library for english dictionary
@@ -67,11 +67,9 @@ class Meaning:
         self.render_meaning = meaning_font.render(self.definition[:i:].capitalize(), False, 'Black')
 
     def meaningPage(self):
-        
         screen.blit(self.render_meaning, (10,30))
 
     def meaning_for_developer(self):
-
         screen.blit(self.render_meaning, (10,90))
         
 
@@ -182,7 +180,7 @@ class Screen(Meaning):
         screen.fill('white')
         screen.blit(cheat, (0,0))
         screen.blit(self.render_word, (350,300))
-        # notice = 'Welcome Sir Developer'
+        # notice = ' Developer'
         # notice_render = win_font.render(notice, False, "black")
         # screen.blit(notice_render, (0,300))
         credit = 'Made by Hirok Roy Rahul'
